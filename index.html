@@ -66,7 +66,16 @@
         })
       );
 
-      window.location.href = "/thank-you.html";
+      const whatsappMessage =
+        "Namaste Sai Dental Clinic, maile website bata appointment form bhareko chu.\n\n" +
+        "Name: " + name + "\n" +
+        "Phone: " + phone + "\n" +
+        "Dental Problem: " + problem + "\n" +
+        "Preferred Date: " + date + "\n" +
+        "Message: " + (message || "N/A");
+
+      window.location.href =
+        "https://wa.me/9779847959926?text=" + encodeURIComponent(whatsappMessage);
     } catch (error) {
       console.error("EmailJS error:", error);
       alert("फर्म पठाउन समस्या भयो। कृपया फेरि प्रयास गर्नुहोस् वा क्लिनिकमा फोन गर्नुहोस्।");
