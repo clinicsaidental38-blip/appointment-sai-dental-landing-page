@@ -103,16 +103,26 @@
       const whatsappUrl =
         "https://wa.me/9779847959926?text=" + encodeURIComponent(whatsappMessage);
 
-      // Track a qualified lead only after EmailJS confirms the appointment request.
+      // Track Lead only after EmailJS confirms the appointment request.
       if (typeof window.fbq === "function") {
-        window.fbq("track", "Lead");
-        window.fbq("track", "Contact");
+        window.fbq("track", "Lead", {
+          content_name: "Sai Dental Appointment Form"
+        });
       }
 
-      // Allow the Pixel a brief moment to send events before opening WhatsApp.
+      // Track Contact when the successful form flow sends the visitor to WhatsApp.
+      // Give the Pixel time to transmit both events before navigating away.
       setTimeout(function () {
-        window.location.href = whatsappUrl;
-      }, 800);
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "Contact", {
+            content_name: "Sai Dental WhatsApp"
+          });
+        }
+
+        setTimeout(function () {
+          window.location.href = whatsappUrl;
+        }, 1500);
+      }, 500);
     } catch (error) {
       console.error("EmailJS error:", error);
       alert("फर्म पठाउन समस्या भयो। कृपया फेरि प्रयास गर्नुहोस् वा क्लिनिकमा फोन गर्नुहोस्।");
